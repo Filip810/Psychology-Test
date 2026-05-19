@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bateria Testów Poznawczych</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="screen-form" class="screen active">
+        <h1>Witaj w badaniu</h1>
+        <p>Test zajmuje około <b>40 minut</b>, musi być wykonywany bez przerwy na urządzeniu które posiada klawiature.</p>
+        <p>Proszę, o wypełnienie wszystkich pól przed rozpoczęciem testów.</p>
+        
+        <input type="text" id="userName" placeholder="Imię lub pseudonim" required>
+        <input type="number" id="userAge" placeholder="Wiek" required>
+        
+        <select id="userGender" onchange="toggleOtherGender()" required>
+            <option value="" disabled selected>Wybierz płeć...</option>
+            <option value="Mężczyzna">Mężczyzna</option>
+            <option value="Kobieta">Kobieta</option>
+            <option value="Inna">Inna (wpisz jaka)</option>
+            <option value="Wolę nie podawać">Wolę nie podawać</option>
+        </select>
+        <input type="text" id="userGenderOther" class="hidden" placeholder="Wpisz swoją płeć">
+        <p>Ile godzin w ost. tygodniu spędziłeś/aś na TikToku? W oparciu o raport screen time.</p>
+        <input type="number" id="tiktokHours" placeholder="Ilość godzin" required>
+<p>Czy korzystasz z innych aplikacji wykorzystujących format "short video"?</p>
+
+<div class="custom-multiselect">
+    <div class="select-box" onclick="toggleDropdown()">
+        <span id="selected-text">Wybierz aplikacje...</span>
+        <span class="arrow">▼</span>
+    </div>
+
+    <div id="dropdown-options" class="dropdown hidden">
+        <label><input type="checkbox" value="Nie korzystam"> Nie korzystam</label>
+        <label><input type="checkbox" value="YouTube Shorts"> YouTube Shorts</label>
+        <label><input type="checkbox" value="Instagram Reels"> Instagram Reels</label>
+        <label><input type="checkbox" value="Snapchat Spotlight"> Snapchat Spotlight</label>
+        <label><input type="checkbox" value="Facebook Reels"> Facebook Reels</label>
+        <label><input type="checkbox" value="Inne"> Inne</label>
+    </div>
+</div>
+
+<div class="adhd-checkbox">
+    <label>
+        Czy posiadasz zdiagnozowane ADHD?
+        <input type="checkbox" id="hasADHD">
+        
+    </label>
+</div>
+
+
+<input type="text" id="otherApp" class="hidden" placeholder="Wpisz inne aplikacje">
+        <button onclick="goToInstructions1()">Dalej</button>
+    </div>
+
+    <div id="screen-instructions-1" class="screen">
+        <h2>Test Sieci Uwagi (ANT) - Krok 1/2</h2>
+        <p>Skup wzrok na krzyżyku na środku ekranu. Za chwilę pojawią się strzałki.</p>
+        <p>Naciśnij <b>STRZAŁKĘ W LEWO</b> lub <b>STRZAŁKĘ W PRAWO</b> na klawiaturze, zgodnie z kierunkiem <b>ŚRODKOWEJ</b> strzałki.</p>
+        <p>Ignoruj strzałki po bokach!</p>
+        <br>
+        <p>Przykłady:</p>
+        <p style="font-size: 24px; letter-spacing: 5px;">→ → <b>→</b> → → (Naciśnij w PRAWO)</p>
+        <p style="font-size: 24px; letter-spacing: 5px;">→ → <b>←</b> → → (Naciśnij w LEWO)</p>
+        <button onclick="goToInstructions2()">Dalej</button>
+    </div>
+
+    <div id="screen-instructions-2" class="screen">
+        <h2>Test Sieci Uwagi (ANT) - Krok 2/2</h2>
+        <p>Czasami ułamek sekundy przed strzałkami zobaczysz na ekranie czarną gwiazdkę (<b>*</b>).</p>
+        <ul style="text-align: left; display: inline-block; font-size: 16px; max-width: 80%;">
+            <li style="margin-bottom: 10px;"><b>Brak gwiazdki:</b> Strzałki pojawią się niespodziewanie.</li>
+            <li style="margin-bottom: 10px;"><b>Jedna gwiazdka:</b> Zawsze podpowiada, gdzie <i><b>dokładnie</b></i> pojawią się strzałki (na górze lub na dole ekranu).</li>
+            <li style="margin-bottom: 10px;"><b>Dwie gwiazdki:</b> Pojawiają się na górze i na dole naraz. To tylko ostrzeżenie o czasie (zmyłka), nie mówi nic o miejscu pojawienia się strzałek.</li>
+        </ul>
+        <p>Twój cel to odpowiadać <b>jak najszybciej i bezbłędnie</b>.</p>
+        <button onclick="startTraining()">Zaczynamy Trening!</button>
+    </div>
+
+    <div id="screen-ant" class="screen">
+        <div id="block-alert" class="hidden"></div>
+        <div id="ant-stimulus-container" class="hidden">
+            <div id="ant-feedback" class="hidden"></div>
+            <div id="ant-top" class="ant-row"></div>
+            <div id="ant-center" class="ant-row">+</div>
+            <div id="ant-bottom" class="ant-row"></div>
+        </div>
+    </div>
+
+    <div id="screen-transition" class="screen">
+        <h2>Koniec treningu!</h2>
+        <p>Teraz rozpocznie się właściwy test.</p>
+        <p>Będzie on podzielony na 3 segmenty. Od tego momentu nie będziesz już informowany o poprawności odpowiedzi, a Twoje wyniki będą zapisywane.</p>
+        <p>Skup się i postaraj odpowiadać jak najszybciej oraz jak najdokładniej.</p>
+        <p><b>Naciśnij SPACJĘ lub kliknij przycisk, aby rozpocząć.</b></p>
+        <button onclick="startRealANT()">Rozpocznij właściwy test</button>
+    </div>
+
+    <div id="screen-choice" class="screen">
+        <h2>Test ANT zakończony!</h2>
+        <p>Przed Tobą drugi i ostatni test (SART).</p>
+        <button onclick="initSartInstructions()">Przejdź do instrukcji SART</button>
+    </div>
+
+    <div id="screen-sart-instructions" class="screen">
+        <h2>Test SART - Instrukcja</h2>
+        <p>Na ekranie będą krótko pojawiać się cyfry od 1 do 9, po których nastąpi znak <b>⊗</b>.</p>
+        <p>Naciśnij <b>SPACJĘ</b> najszybciej jak potrafisz dla każdej cyfry, <b>Z WYJĄTKIEM cyfry 3</b>.</p>
+        <p>Jeśli zobaczysz "3", powstrzymaj się i nic nie naciskaj.</p>
+        <button onclick="startSartPractice()">Zaczynamy Trening!</button>
+    </div>
+
+    <div id="screen-sart-transition" class="screen">
+        <h2>Koniec treningu!</h2>
+        <p>Teraz rozpocznie się właściwy test.</p>
+        <p>Nie będziesz już informowany o tym, czy zrobiłeś to dobrze czy źle. Cyfry będą pojawiać się jedna po drugiej bez żadnych przerw.</p>
+        <p>Pamiętaj: Spacja na każdą cyfrę, powstrzymaj się tylko przy <b>3</b>.</p>
+        <p><b>Naciśnij SPACJĘ lub kliknij przycisk, aby rozpocząć.</b></p>
+        <button onclick="startRealSart()">Rozpocznij test SART</button>
+    </div>
+
+    <div id="screen-sart" class="screen">
+        <div id="sart-stimulus-container" class="hidden">
+            <div id="sart-feedback" class="hidden" style="font-size: 30px; margin-bottom: 20px;"></div>
+            <div id="sart-target"></div>
+        </div>
+    </div>
+
+    <div id="screen-end" class="screen">
+        <h2>Dziękujemy za udział w badaniu!</h2>
+        <p id="save-status">Trwa zapisywanie wyników...</p>
+    </div>
+
+
+
+
+    <script src="script.js"></script>
+
+
+</body>
+</html>
