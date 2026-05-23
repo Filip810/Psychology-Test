@@ -3,143 +3,301 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Bateria Testów Poznawczych ANT i SART — badanie uwagi i hamowania odpowiedzi">
     <title>Bateria Testów Poznawczych</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+<div id="progress-bar"></div>
+<div id="toast-container"></div>
+
+<!-- ===================== FORMULARZ ===================== -->
 <div id="screen-form" class="screen active">
-        <h1>Witaj w badaniu</h1>
-        <p>Test zajmuje około <b>40 minut</b>, musi być wykonywany bez przerwy na urządzeniu które posiada klawiature.</p>
-        <p>Proszę, o wypełnienie wszystkich pól przed rozpoczęciem testów.</p>
-        
-        <input type="text" id="userName" placeholder="Imię lub pseudonim" required>
-        <input type="number" id="userAge" placeholder="Wiek" required>
-        
-        <select id="userGender" onchange="toggleOtherGender()" required>
-            <option value="" disabled selected>Wybierz płeć...</option>
-            <option value="Mężczyzna">Mężczyzna</option>
-            <option value="Kobieta">Kobieta</option>
-            <option value="Inna">Inna (wpisz jaka)</option>
-            <option value="Wolę nie podawać">Wolę nie podawać</option>
-        </select>
-        <input type="text" id="userGenderOther" class="hidden" placeholder="Wpisz swoją płeć">
-        <p>Ile godzin w ost. tygodniu spędziłeś/aś na TikToku? W oparciu o raport screen time.</p>
-        <input type="number" id="tiktokHours" placeholder="Ilość godzin" required>
-<p>Czy korzystasz z innych aplikacji wykorzystujących format "short video"?</p>
-
-<div class="custom-multiselect">
-    <div class="select-box" onclick="toggleDropdown()">
-        <span id="selected-text">Wybierz aplikacje...</span>
-        <span class="arrow">▼</span>
+    <div class="step-indicator">
+        <div class="step-dot active"></div>
+        <div class="step-dot"></div>
+        <div class="step-dot"></div>
+        <div class="step-dot"></div>
     </div>
 
-    <div id="dropdown-options" class="dropdown hidden">
-        <label><input type="checkbox" value="Nie korzystam"> Nie korzystam</label>
-        <label><input type="checkbox" value="YouTube Shorts"> YouTube Shorts</label>
-        <label><input type="checkbox" value="Instagram Reels"> Instagram Reels</label>
-        <label><input type="checkbox" value="Snapchat Spotlight"> Snapchat Spotlight</label>
-        <label><input type="checkbox" value="Facebook Reels"> Facebook Reels</label>
-        <label><input type="checkbox" value="Inne"> Inne</label>
-    </div>
-</div>
-
-<div class="adhd-checkbox">
-    <label>
-        Czy posiadasz zdiagnozowane ADHD?
-        <input type="checkbox" id="hasADHD">
-        
-    </label>
-</div>
-
-
-<input type="text" id="otherApp" class="hidden" placeholder="Wpisz inne aplikacje">
-        <button onclick="goToInstructions1()">Dalej</button>
+    <div class="screen-header">
+        <div class="screen-icon">🧠</div>
+        <h1>Badanie Poznawcze</h1>
+        <p class="subtitle">Test zajmuje około <b>40 minut</b> i musi być wykonywany bez przerwy na urządzeniu z klawiaturą.</p>
     </div>
 
-    <div id="screen-instructions-1" class="screen">
-        <h2>Test Sieci Uwagi (ANT) - Krok 1/2</h2>
-        <p>Skup wzrok na krzyżyku na środku ekranu. Za chwilę pojawią się strzałki.</p>
-        <p>Naciśnij <b>STRZAŁKĘ W LEWO</b> lub <b>STRZAŁKĘ W PRAWO</b> na klawiaturze, zgodnie z kierunkiem <b>ŚRODKOWEJ</b> strzałki.</p>
-        <p>Ignoruj strzałki po bokach!</p>
-        <br>
-        <p>Przykłady:</p>
-        <p style="font-size: 24px; letter-spacing: 5px;">→ → <b>→</b> → → (Naciśnij w PRAWO)</p>
-        <p style="font-size: 24px; letter-spacing: 5px;">→ → <b>←</b> → → (Naciśnij w LEWO)</p>
-        <button onclick="goToInstructions2()">Dalej</button>
-    </div>
+    <div class="form-grid">
+        <div class="input-group">
+            <label class="input-label" for="userName">Imię lub pseudonim</label>
+            <input type="text" id="userName" placeholder="np. Jan K." autocomplete="off">
+        </div>
 
-    <div id="screen-instructions-2" class="screen">
-        <h2>Test Sieci Uwagi (ANT) - Krok 2/2</h2>
-        <p>Czasami ułamek sekundy przed strzałkami zobaczysz na ekranie czarną gwiazdkę (<b>*</b>).</p>
-        <ul style="text-align: left; display: inline-block; font-size: 16px; max-width: 80%;">
-            <li style="margin-bottom: 10px;"><b>Brak gwiazdki:</b> Strzałki pojawią się niespodziewanie.</li>
-            <li style="margin-bottom: 10px;"><b>Jedna gwiazdka:</b> Zawsze podpowiada, gdzie <i><b>dokładnie</b></i> pojawią się strzałki (na górze lub na dole ekranu).</li>
-            <li style="margin-bottom: 10px;"><b>Dwie gwiazdki:</b> Pojawiają się na górze i na dole naraz. To tylko ostrzeżenie o czasie (zmyłka), nie mówi nic o miejscu pojawienia się strzałek.</li>
-        </ul>
-        <p>Twój cel to odpowiadać <b>jak najszybciej i bezbłędnie</b>.</p>
-        <button onclick="startTraining()">Zaczynamy Trening!</button>
-    </div>
+        <div class="input-group">
+            <label class="input-label" for="userAge">Wiek</label>
+            <input type="number" id="userAge" placeholder="np. 23" min="10" max="99">
+        </div>
 
-    <div id="screen-ant" class="screen">
-        <div id="block-alert" class="hidden"></div>
-        <div id="ant-stimulus-container" class="hidden">
-            <div id="ant-feedback" class="hidden"></div>
-            <div id="ant-top" class="ant-row"></div>
-            <div id="ant-center" class="ant-row">+</div>
-            <div id="ant-bottom" class="ant-row"></div>
+        <div class="input-group">
+            <label class="input-label" for="userGender">Płeć</label>
+            <select id="userGender" onchange="toggleOtherGender()">
+                <option value="" disabled selected>Wybierz płeć...</option>
+                <option value="Mężczyzna">Mężczyzna</option>
+                <option value="Kobieta">Kobieta</option>
+                <option value="Inna">Inna (wpisz poniżej)</option>
+                <option value="Wolę nie podawać">Wolę nie podawać</option>
+            </select>
+            <input type="text" id="userGenderOther" class="hidden" placeholder="Wpisz swoją płeć" style="margin-top:8px;">
+        </div>
+
+        <div class="input-group">
+            <label class="input-label" for="tiktokHours">Godziny TikToka  w ostatnim tygodniu</label>
+            <p class="input-hint">Na podstawie raportu Screen Time w ustawieniach telefonu.</p>
+            <input type="number" id="tiktokHours" placeholder="np. 7" min="0" step="0.5">
+        </div>
+
+        <div class="input-group">
+            <label class="input-label">Inne aplikacje "short video"</label>
+            <div class="custom-multiselect">
+                <div class="select-box" id="select-box-main" onclick="toggleDropdown()">
+                    <span id="selected-text">Wybierz aplikacje...</span>
+                    <span class="arrow">▼</span>
+                </div>
+                <div id="dropdown-options" class="dropdown hidden">
+                    <label><input type="checkbox" value="Nie korzystam"> Nie korzystam</label>
+                    <label><input type="checkbox" value="YouTube Shorts"> YouTube Shorts</label>
+                    <label><input type="checkbox" value="Instagram Reels"> Instagram Reels</label>
+                    <label><input type="checkbox" value="Snapchat Spotlight"> Snapchat Spotlight</label>
+                    <label><input type="checkbox" value="Facebook Reels"> Facebook Reels</label>
+                    <label><input type="checkbox" value="Inne"> Inne</label>
+                </div>
+            </div>
+            <input type="text" id="otherApp" class="hidden" placeholder="Wpisz inne aplikacje" style="margin-top:8px;">
+        </div>
+
+        <div class="input-group hidden" id="otherAppsHoursGroup">
+            <label class="input-label" for="otherAppsHours">Godziny na innych aplikacjach "short video" w ostatnim tygodniu</label>
+            <p class="input-hint">Łączna liczba godzin na wszystkich wybranych aplikacjach (z wyjątkiem TikToka).</p>
+            <input type="number" id="otherAppsHours" placeholder="np. 3" min="0" step="0.5">
+        </div>
+
+        <div class="adhd-checkbox">
+            <label>
+                <input type="checkbox" id="hasADHD">
+                <span>Posiadam zdiagnozowane ADHD</span>
+            </label>
         </div>
     </div>
 
-    <div id="screen-transition" class="screen">
-        <h2>Koniec treningu!</h2>
-        <p>Teraz rozpocznie się właściwy test.</p>
-        <p>Będzie on podzielony na 3 segmenty. Od tego momentu nie będziesz już informowany o poprawności odpowiedzi, a Twoje wyniki będą zapisywane.</p>
-        <p>Skup się i postaraj odpowiadać jak najszybciej oraz jak najdokładniej.</p>
-        <p><b>Naciśnij SPACJĘ lub kliknij przycisk, aby rozpocząć.</b></p>
-        <button onclick="startRealANT()">Rozpocznij właściwy test</button>
+    <button class="btn-primary" onclick="goToInstructions1()">
+        Dalej
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </button>
+</div>
+
+<!-- ===================== ANT INSTRUKCJA 1 ===================== -->
+<div id="screen-instructions-1" class="screen">
+    <div class="step-indicator">
+        <div class="step-dot done"></div>
+        <div class="step-dot active"></div>
+        <div class="step-dot"></div>
+        <div class="step-dot"></div>
     </div>
 
-    <div id="screen-choice" class="screen">
+    <div class="screen-header">
+        <div class="badge">ANT — krok 1/2</div>
+        <h2>Test Sieci Uwagi</h2>
+        <p class="subtitle">Skup wzrok na krzyżyku <b>+</b> na środku ekranu.</p>
+    </div>
+
+    <div class="key-cards">
+        <div class="key-card">
+            <div class="key-icon">←</div>
+            <div class="key-label">Strzałka LEWO</div>
+        </div>
+        <div class="key-card">
+            <div class="key-icon">→</div>
+            <div class="key-label">Strzałka PRAWO</div>
+        </div>
+    </div>
+
+    <p>Reaguj na kierunek <b>środkowej</b> strzałki. Ignoruj strzałki po bokach!</p>
+
+    <div class="examples-section">
+        <p class="examples-title">Przykłady:</p>
+        <div class="example-row">
+            <div class="example-block">→ → <span class="target-arrow">→</span> → →</div>
+            <div class="example-answer answer-right">Naciśnij PRAWO →</div>
+        </div>
+        <div class="example-row">
+            <div class="example-block">→ → <span class="target-arrow">←</span> → →</div>
+            <div class="example-answer answer-left">← Naciśnij LEWO</div>
+        </div>
+    </div>
+
+    <button class="btn-primary" onclick="goToInstructions2()">
+        Rozumiem
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </button>
+</div>
+
+<!-- ===================== ANT INSTRUKCJA 2 ===================== -->
+<div id="screen-instructions-2" class="screen">
+    <div class="step-indicator">
+        <div class="step-dot done"></div>
+        <div class="step-dot done"></div>
+        <div class="step-dot active"></div>
+        <div class="step-dot"></div>
+    </div>
+
+    <div class="screen-header">
+        <div class="badge">ANT — krok 2/2</div>
+        <h2>Podpowiedzi gwiazdkowe</h2>
+        <p class="subtitle">Chwilę przed strzałkami może pojawić się gwiazdka <b>*</b>.</p>
+    </div>
+
+    <ul class="info-list">
+        <li>
+            <span class="info-bullet none-bullet">∅</span>
+            <div><b>Brak gwiazdki</b> — strzałki pojawią się niespodziewanie</div>
+        </li>
+        <li>
+            <span class="info-bullet spatial-bullet">*</span>
+            <div><b>Jedna gwiazdka</b> — podpowiada dokładnie <i>gdzie</i> pojawią się strzałki</div>
+        </li>
+        <li>
+            <span class="info-bullet double-bullet">**</span>
+            <div><b>Dwie gwiazdki</b> — ostrzeżenie czasowe, nie zdradza miejsca</div>
+        </li>
+    </ul>
+
+    <div class="highlight-box">
+        Odpowiadaj <b>jak najszybciej</b> i <b>jak najdokładniej</b>.
+    </div>
+
+    <button class="btn-primary" onclick="startTraining()">Zaczynamy trening!</button>
+</div>
+
+<!-- ===================== EKRAN ANT ===================== -->
+<div id="screen-ant" class="screen">
+    <div id="block-alert" class="hidden"></div>
+    <div id="ant-stimulus-container" class="hidden">
+        <div id="ant-feedback" class="hidden"></div>
+        <div id="ant-top" class="ant-row"></div>
+        <div id="ant-center" class="ant-row">+</div>
+        <div id="ant-bottom" class="ant-row"></div>
+    </div>
+</div>
+
+<!-- ===================== PRZEJŚCIE ANT → WŁAŚCIWY ===================== -->
+<div id="screen-transition" class="screen">
+    <div class="step-indicator">
+        <div class="step-dot done"></div>
+        <div class="step-dot done"></div>
+        <div class="step-dot done"></div>
+        <div class="step-dot active"></div>
+    </div>
+
+    <div class="screen-header">
+        <div class="screen-icon success-icon">✓</div>
+        <h2>Koniec treningu!</h2>
+    </div>
+
+    <p>Teraz rozpocznie się właściwy test ANT podzielony na <b>3 segmenty</b>.</p>
+    <p>Od tej chwili wyniki są zapisywane, a informacje zwrotne nie będą wyświetlane.</p>
+
+    <div class="highlight-box accent">
+        Skup się i odpowiadaj jak najszybciej oraz jak najdokładniej.
+    </div>
+
+    <p class="cta-hint">Naciśnij <kbd>SPACJĘ</kbd> lub kliknij przycisk poniżej.</p>
+    <button class="btn-primary" onclick="startRealANT()">Rozpocznij właściwy test →</button>
+</div>
+
+<!-- ===================== WYBÓR (po ANT) ===================== -->
+<div id="screen-choice" class="screen">
+    <div class="screen-header">
+        <div class="screen-icon success-icon">✓</div>
         <h2>Test ANT zakończony!</h2>
-        <p>Przed Tobą drugi i ostatni test (SART).</p>
-        <button onclick="initSartInstructions()">Przejdź do instrukcji SART</button>
+        <p class="subtitle">Znakomita robota. Teraz przystąpisz do ostatniego testu — <b>SART</b>.</p>
+    </div>
+    <button class="btn-primary" onclick="initSartInstructions()">Przejdź do instrukcji SART →</button>
+</div>
+
+<!-- ===================== SART INSTRUKCJA ===================== -->
+<div id="screen-sart-instructions" class="screen">
+    <div class="screen-header">
+        <div class="badge">SART</div>
+        <h2>Test Hamowania Odpowiedzi</h2>
+        <p class="subtitle">Na ekranie będą pojawiać się cyfry od <b>1</b> do <b>9</b>, po których nastąpi znak <b>⊗</b>.</p>
     </div>
 
-    <div id="screen-sart-instructions" class="screen">
-        <h2>Test SART - Instrukcja</h2>
-        <p>Na ekranie będą krótko pojawiać się cyfry od 1 do 9, po których nastąpi znak <b>⊗</b>.</p>
-        <p>Naciśnij <b>SPACJĘ</b> najszybciej jak potrafisz dla każdej cyfry, <b>Z WYJĄTKIEM cyfry 3</b>.</p>
-        <p>Jeśli zobaczysz "3", powstrzymaj się i nic nie naciskaj.</p>
-        <button onclick="startSartPractice()">Zaczynamy Trening!</button>
-    </div>
-
-    <div id="screen-sart-transition" class="screen">
-        <h2>Koniec treningu!</h2>
-        <p>Teraz rozpocznie się właściwy test.</p>
-        <p>Nie będziesz już informowany o tym, czy zrobiłeś to dobrze czy źle. Cyfry będą pojawiać się jedna po drugiej bez żadnych przerw.</p>
-        <p>Pamiętaj: Spacja na każdą cyfrę, powstrzymaj się tylko przy <b>3</b>.</p>
-        <p><b>Naciśnij SPACJĘ lub kliknij przycisk, aby rozpocząć.</b></p>
-        <button onclick="startRealSart()">Rozpocznij test SART</button>
-    </div>
-
-    <div id="screen-sart" class="screen">
-        <div id="sart-stimulus-container" class="hidden">
-            <div id="sart-feedback" class="hidden" style="font-size: 30px; margin-bottom: 20px;"></div>
-            <div id="sart-target"></div>
+    <div class="sart-rules">
+        <div class="sart-rule rule-go">
+            <div class="rule-icon">␣</div>
+            <div>
+                <div class="rule-title">Naciśnij SPACJĘ</div>
+                <div class="rule-desc">dla cyfr 1, 2, 4, 5, 6, 7, 8, 9</div>
+            </div>
+        </div>
+        <div class="sart-rule rule-stop">
+            <div class="rule-icon rule-no">3</div>
+            <div>
+                <div class="rule-title">NIE naciskaj nic</div>
+                <div class="rule-desc">gdy zobaczysz cyfrę <b>3</b></div>
+            </div>
         </div>
     </div>
 
-    <div id="screen-end" class="screen">
-        <h2>Dziękujemy za udział w badaniu!</h2>
-        <p id="save-status">Trwa zapisywanie wyników...</p>
+    <button class="btn-primary" onclick="startSartPractice()">Zaczynamy trening!</button>
+</div>
+
+<!-- ===================== PRZEJŚCIE SART → WŁAŚCIWY ===================== -->
+<div id="screen-sart-transition" class="screen">
+    <div class="screen-header">
+        <div class="screen-icon success-icon">✓</div>
+        <h2>Koniec treningu!</h2>
     </div>
 
+    <p>Teraz rozpocznie się właściwy test SART.</p>
+    <p>Cyfry będą pojawiać się jedna po drugiej bez przerw na feedback.</p>
+    <div class="highlight-box">
+        Spacja na każdą cyfrę — powstrzymaj się tylko przy <b style="color:#ef4444;">3</b>.
+    </div>
 
+    <p class="cta-hint">Naciśnij <kbd>SPACJĘ</kbd> lub kliknij przycisk poniżej.</p>
+    <button class="btn-primary" onclick="startRealSart()">Rozpocznij test SART →</button>
+</div>
 
+<!-- ===================== EKRAN SART ===================== -->
+<div id="screen-sart" class="screen">
+    <div id="sart-stimulus-container" class="hidden">
+        <div id="sart-feedback" class="hidden"></div>
+        <div id="sart-target"></div>
+    </div>
+</div>
 
-    <script src="script.js"></script>
+<!-- ===================== KONIEC ===================== -->
+<div id="screen-end" class="screen">
+    <div class="end-animation">
+        <div class="end-icon">✓</div>
+        <div class="end-rings">
+            <div class="ring ring-1"></div>
+            <div class="ring ring-2"></div>
+            <div class="ring ring-3"></div>
+        </div>
+    </div>
+    <h2>Dziękujemy za udział!</h2>
+    <p>Ukończyłeś/aś pełną baterię testów poznawczych.<br>Twoje odpowiedzi są cenne dla naszych badań.</p>
+    <p id="save-status" class="save-status">
+        <span class="save-spinner"></span>
+        Trwa zapisywanie wyników...
+    </p>
+</div>
 
-
+<script src="script.js"></script>
 </body>
 </html>
