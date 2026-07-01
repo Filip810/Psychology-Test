@@ -209,6 +209,8 @@ function resetBlockMetrics() {
         noneCorrect: 0, noneIncorrect: 0,
         spatialCorrect: 0, spatialIncorrect: 0,
         doubleCorrect: 0, doubleIncorrect: 0,
+        congruentCorrect: 0, congruentIncorrect: 0,
+        incongruentCorrect: 0, incongruentIncorrect: 0,
     };
 }
 
@@ -330,8 +332,13 @@ function recordMetrics(trial, isCorrect, isMissed, rt) {
     if (isCorrect) blockMetrics.totalCorrect++;
     else           blockMetrics.totalIncorrect++;
 
-    if (trial.congruent) blockMetrics.rtCongruent.push(rt);
-    else                 blockMetrics.rtIncongruent.push(rt);
+    if (trial.congruent) {
+        blockMetrics.rtCongruent.push(rt);
+        if (isCorrect) blockMetrics.congruentCorrect++;  else blockMetrics.congruentIncorrect++;
+    } else {
+        blockMetrics.rtIncongruent.push(rt);
+        if (isCorrect) blockMetrics.incongruentCorrect++; else blockMetrics.incongruentIncorrect++;
+    }
 
     if (trial.cue === "none") {
         blockMetrics.rtNone.push(rt);
@@ -408,8 +415,13 @@ function saveBlockMetrics() {
     sessionData[p + "antDoubleIncorrect"]  = blockMetrics.doubleIncorrect;
     sessionData[p + "antDoubleAvgTime"]    = avg(blockMetrics.rtDouble);
 
-    sessionData[p + "antCongruentAvgTime"]   = avg(blockMetrics.rtCongruent);
-    sessionData[p + "antIncongruentAvgTime"] = avg(blockMetrics.rtIncongruent);
+    sessionData[p + "antCongruentCorrect"]    = blockMetrics.congruentCorrect;
+    sessionData[p + "antCongruentIncorrect"]  = blockMetrics.congruentIncorrect;
+    sessionData[p + "antCongruentAvgTime"]    = avg(blockMetrics.rtCongruent);
+
+    sessionData[p + "antIncongruentCorrect"]   = blockMetrics.incongruentCorrect;
+    sessionData[p + "antIncongruentIncorrect"] = blockMetrics.incongruentIncorrect;
+    sessionData[p + "antIncongruentAvgTime"]   = avg(blockMetrics.rtIncongruent);
 }
 
 /* ============================================================
