@@ -174,17 +174,17 @@ const MAX_BLOCKS             = 3;
 const cues      = ["none", "spatial", "double"];
 const positions = ["top", "bottom"];
 const arrowTypes = [
-    { target: "→ → → → →", correctKey: "ArrowRight" },
-    { target: "→ → ← → →", correctKey: "ArrowLeft"  },
-    { target: "← ← ← ← ←", correctKey: "ArrowLeft"  },
-    { target: "← ← → ← ←", correctKey: "ArrowRight" },
+    { target: "→ → → → →", correctKey: "ArrowRight", congruent: true  },
+    { target: "→ → ← → →", correctKey: "ArrowLeft",  congruent: false },
+    { target: "← ← ← ← ←", correctKey: "ArrowLeft",  congruent: true  },
+    { target: "← ← → ← ←", correctKey: "ArrowRight", congruent: false },
 ];
 
 const TOTAL_ANT_TRIALS = TRIALS_PER_PRACTICE + (TRIALS_PER_REAL_BLOCK * MAX_BLOCKS);
 
 let baseTrials = [];
 cues.forEach(c => positions.forEach(p => arrowTypes.forEach(a => {
-    baseTrials.push({ cue: c, position: p, target: a.target, correctKey: a.correctKey });
+    baseTrials.push({ cue: c, position: p, target: a.target, correctKey: a.correctKey, congruent: a.congruent });
 })));
 
 let antTrials = [];
@@ -205,6 +205,7 @@ function resetBlockMetrics() {
     return {
         totalCorrect: 0, totalIncorrect: 0, totalMissed: 0,
         rtAll: [], rtNone: [], rtSpatial: [], rtDouble: [],
+        rtCongruent: [], rtIncongruent: [],
         noneCorrect: 0, noneIncorrect: 0,
         spatialCorrect: 0, spatialIncorrect: 0,
         doubleCorrect: 0, doubleIncorrect: 0,
@@ -329,6 +330,9 @@ function recordMetrics(trial, isCorrect, isMissed, rt) {
     if (isCorrect) blockMetrics.totalCorrect++;
     else           blockMetrics.totalIncorrect++;
 
+    if (trial.congruent) blockMetrics.rtCongruent.push(rt);
+    else                 blockMetrics.rtIncongruent.push(rt);
+
     if (trial.cue === "none") {
         blockMetrics.rtNone.push(rt);
         if (isCorrect) blockMetrics.noneCorrect++;    else blockMetrics.noneIncorrect++;
@@ -403,6 +407,9 @@ function saveBlockMetrics() {
     sessionData[p + "antDoubleCorrect"]    = blockMetrics.doubleCorrect;
     sessionData[p + "antDoubleIncorrect"]  = blockMetrics.doubleIncorrect;
     sessionData[p + "antDoubleAvgTime"]    = avg(blockMetrics.rtDouble);
+
+    sessionData[p + "antCongruentAvgTime"]   = avg(blockMetrics.rtCongruent);
+    sessionData[p + "antIncongruentAvgTime"] = avg(blockMetrics.rtIncongruent);
 }
 
 /* ============================================================
