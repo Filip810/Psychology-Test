@@ -702,6 +702,7 @@ button:active { transform: translateY(-1px); }
 .none-bullet    { color: var(--text-3); }
 .spatial-bullet { color: var(--warning); }
 .double-bullet  { color: var(--accent); letter-spacing: -2px; }
+.center-bullet  { color: var(--success); }
 
 /* ============================================================
    HIGHLIGHT BOX

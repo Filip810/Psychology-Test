@@ -171,7 +171,7 @@ const TRIALS_PER_PRACTICE    = 24;
 const TRIALS_PER_REAL_BLOCK  = 96;
 const MAX_BLOCKS             = 3;
 
-const cues      = ["none", "spatial", "double"];
+const cues      = ["none", "spatial", "double", "center"];
 const positions = ["top", "bottom"];
 const arrowTypes = [
     { target: "→ → → → →", correctKey: "ArrowRight", congruent: true  },
@@ -204,11 +204,12 @@ let blockMetrics = resetBlockMetrics();
 function resetBlockMetrics() {
     return {
         totalCorrect: 0, totalIncorrect: 0, totalMissed: 0,
-        rtAll: [], rtNone: [], rtSpatial: [], rtDouble: [],
+        rtAll: [], rtNone: [], rtSpatial: [], rtDouble: [], rtCenter: [],
         rtCongruent: [], rtIncongruent: [],
         noneCorrect: 0, noneIncorrect: 0,
         spatialCorrect: 0, spatialIncorrect: 0,
         doubleCorrect: 0, doubleIncorrect: 0,
+        centerCorrect: 0, centerIncorrect: 0,
         congruentCorrect: 0, congruentIncorrect: 0,
         incongruentCorrect: 0, incongruentIncorrect: 0,
     };
@@ -257,11 +258,14 @@ function runANTTrial() {
         } else if (trial.cue === "double") {
             topDiv.innerHTML = "*";
             botDiv.innerHTML = "*";
+        } else if (trial.cue === "center") {
+            cenDiv.innerHTML = "*";
         }
 
         setTimeout(() => {
             topDiv.innerHTML = "";
             botDiv.innerHTML = "";
+            cenDiv.innerHTML = "+";
 
             setTimeout(() => {
                 (trial.position === "top" ? topDiv : botDiv).innerHTML = trial.target;
@@ -349,6 +353,9 @@ function recordMetrics(trial, isCorrect, isMissed, rt) {
     } else if (trial.cue === "double") {
         blockMetrics.rtDouble.push(rt);
         if (isCorrect) blockMetrics.doubleCorrect++;  else blockMetrics.doubleIncorrect++;
+    } else if (trial.cue === "center") {
+        blockMetrics.rtCenter.push(rt);
+        if (isCorrect) blockMetrics.centerCorrect++;  else blockMetrics.centerIncorrect++;
     }
 }
 
@@ -414,6 +421,10 @@ function saveBlockMetrics() {
     sessionData[p + "antDoubleCorrect"]    = blockMetrics.doubleCorrect;
     sessionData[p + "antDoubleIncorrect"]  = blockMetrics.doubleIncorrect;
     sessionData[p + "antDoubleAvgTime"]    = avg(blockMetrics.rtDouble);
+
+    sessionData[p + "antCenterCorrect"]    = blockMetrics.centerCorrect;
+    sessionData[p + "antCenterIncorrect"]  = blockMetrics.centerIncorrect;
+    sessionData[p + "antCenterAvgTime"]    = avg(blockMetrics.rtCenter);
 
     sessionData[p + "antCongruentCorrect"]    = blockMetrics.congruentCorrect;
     sessionData[p + "antCongruentIncorrect"]  = blockMetrics.congruentIncorrect;
